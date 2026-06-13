@@ -1,4 +1,4 @@
-# 👋 Hi, I'm ZhiLi Deng
+# 👋 Hi, I'm ZhiLi Deng 【邓智立】
 
 ### Building AI Systems, Exploring New Ideas
 
