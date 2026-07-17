@@ -728,7 +728,9 @@ git merge-base --is-ancestor origin/main HEAD
 在 `git fetch` 后记录回退点：
 
 ```bash
-PREVIOUS_MAIN=$(git rev-parse origin/main)
+mkdir -p .superpowers/sdd
+git rev-parse origin/main > .superpowers/sdd/previous-main
+PREVIOUS_MAIN=$(cat .superpowers/sdd/previous-main)
 ```
 
 Expected: `git merge-base` 退出码为 `0`。若退出码为 `1`，执行：
@@ -780,7 +782,8 @@ Expected: 前两个提交 SHA 完全一致。通过 GitHub 读取 `zhilideng/zhi
 记录发布提交：
 
 ```bash
-PUBLISHED_MAIN=$(git rev-parse origin/main)
+git rev-parse origin/main > .superpowers/sdd/published-main
+PUBLISHED_MAIN=$(cat .superpowers/sdd/published-main)
 ```
 
 - [ ] **Step 5: 捕获并检查真实个人首页**
@@ -802,8 +805,8 @@ https://github.com/zhilideng
 
 在交付说明中记录：
 
-- 发布前 `main` 提交：`$PREVIOUS_MAIN` 的实际完整 SHA。
-- 发布后 `main` 提交：`$PUBLISHED_MAIN` 的实际完整 SHA。
-- 回退方式：执行 `git revert --no-commit "$PREVIOUS_MAIN"..origin/main`，检查差异后执行 `git commit -m "revert: restore previous GitHub profile"` 与 `git push origin HEAD:main`；禁止 `git reset --hard` 和对 `main` 强制推送。
+- 发布前 `main` 提交：读取 `.superpowers/sdd/previous-main` 中的实际完整 SHA。
+- 发布后 `main` 提交：读取 `.superpowers/sdd/published-main` 中的实际完整 SHA。
+- 回退方式：先执行 `PREVIOUS_MAIN=$(cat .superpowers/sdd/previous-main)`，再执行 `git revert --no-commit "$PREVIOUS_MAIN"..origin/main`，检查差异后执行 `git commit -m "revert: restore previous GitHub profile"` 与 `git push origin HEAD:main`；禁止 `git reset --hard` 和对 `main` 强制推送。
 
 最终回复必须提供线上首页链接、验证摘要和实际发布提交 SHA。
