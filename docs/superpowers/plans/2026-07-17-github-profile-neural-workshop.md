@@ -378,7 +378,7 @@ def build_hero(background_path: Path, avatar_path: Path, output_path: Path) -> N
     draw.text((72, 182), "把 AI 想法，做成真正运行的系统", font=font(FONT_CJK, 38), fill="#FFFFFF")
     draw.rounded_rectangle((72, 257, 686, 318), radius=12, fill=(4, 12, 23, 205), outline=(103, 232, 249, 75), width=2)
     draw.text((94, 274), "AI SYSTEMS / AGENTS / EVALUATION", font=font(FONT_MONO, 20), fill="#A5B4FC")
-    draw.text((72, 358), "github.com/zhilideng", font=font(FONT_MONO, 16), fill="#91A4BA")
+    draw.text((72, 353), "github.com/zhilideng", font=font(FONT_MONO, 16), fill="#91A4BA")
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     canvas.convert("RGB").save(output_path, format="PNG", optimize=True)
