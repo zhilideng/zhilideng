@@ -7,14 +7,8 @@ from pathlib import Path
 
 REQUIRED_FRAGMENTS = (
     "把 AI 想法，做成真正运行的系统",
-    "## 01 / 当前专注",
-    "## 02 / 代表系统",
-    "## 03 / 技术版图",
-    "## 04 / 开源即实践",
-    "https://github.com/zhilideng/arch-fastapi",
-    "https://github.com/zhilideng/agentscope-chat-service",
-    "https://github.com/zhilideng/medical-ai-safety-evaluation",
-    "https://github.com/zhilideng/awesome-skills",
+    "我关注的不是让模型“看起来聪明”，而是让 AI 系统真正可运行、可维护、可评估。",
+    "从生产级应用架构、Agent 状态与会话，到高风险场景下的安全评测。",
     "./assets/neural-workshop/hero.png",
 )
 

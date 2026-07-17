@@ -6,14 +6,6 @@ from pathlib import Path
 from tools.profile_contract import validate_profile
 
 
-PROJECT_URLS = (
-    "https://github.com/zhilideng/arch-fastapi",
-    "https://github.com/zhilideng/agentscope-chat-service",
-    "https://github.com/zhilideng/medical-ai-safety-evaluation",
-    "https://github.com/zhilideng/awesome-skills",
-)
-
-
 def write_png_header(path: Path, width: int, height: int) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_bytes(
@@ -26,16 +18,13 @@ def write_png_header(path: Path, width: int, height: int) -> None:
 
 
 def valid_readme() -> str:
-    project_links = "\n".join(f"- {url}" for url in PROJECT_URLS)
     return f"""![Neural Workshop](./assets/neural-workshop/hero.png)
 
 把 AI 想法，做成真正运行的系统
 
-## 01 / 当前专注
-## 02 / 代表系统
-{project_links}
-## 03 / 技术版图
-## 04 / 开源即实践
+我关注的不是让模型“看起来聪明”，而是让 AI 系统真正可运行、可维护、可评估。
+
+从生产级应用架构、Agent 状态与会话，到高风险场景下的安全评测。
 """
 
 
@@ -49,10 +38,13 @@ class ProfileContractTests(unittest.TestCase):
 
             self.assertEqual(validate_profile(root), [])
 
-    def test_reports_dynamic_cards_missing_projects_and_wrong_size(self) -> None:
+    def test_reports_dynamic_cards_missing_intro_copy_and_wrong_size(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            bad = valid_readme().replace(PROJECT_URLS[-1], "")
+            bad = valid_readme().replace(
+                "从生产级应用架构、Agent 状态与会话，到高风险场景下的安全评测。",
+                "",
+            )
             bad += "\nhttps://github-readme-stats.vercel.app/api?username=zhilideng\n"
             (root / "README.md").write_text(bad, encoding="utf-8")
             write_png_header(root / "assets/neural-workshop/hero.png", 1200, 400)
@@ -60,7 +52,7 @@ class ProfileContractTests(unittest.TestCase):
 
             errors = validate_profile(root)
 
-            self.assertTrue(any("awesome-skills" in error for error in errors))
+            self.assertTrue(any("从生产级应用架构" in error for error in errors))
             self.assertTrue(any("动态统计" in error for error in errors))
             self.assertTrue(any("1280x420" in error for error in errors))
 
